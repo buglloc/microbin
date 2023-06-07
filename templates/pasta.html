@@ -69,12 +69,6 @@
   const url = (`{{ args.short_path }}` === "") ? `{{ args.public_path }}/pasta/{{pasta.id_as_animals()}}` : `{{ args.short_path }}/p/{{pasta.id_as_animals()}}`
   const redirect_url = (`{{ args.short_path }}` === "") ? `{{ args.public_path }}/url/{{pasta.id_as_animals()}}` : `{{ args.short_path }}/u/{{pasta.id_as_animals()}}`
 
-  const decodeEntity = (inputStr) => {
-    var textarea = document.createElement("textarea");
-    textarea.innerHTML = inputStr;
-    return textarea.value;
-  }
-
   if (copyURLBtn) {
     copyURLBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(url)
@@ -97,8 +91,7 @@
   }
 
   copyTextBtn.addEventListener("click", () => {
-    const decodeContent = decodeEntity(content)
-    navigator.clipboard.writeText(decodeContent)
+    navigator.clipboard.writeText(content)
     copyTextBtn.innerHTML = "Copied"
     setTimeout(() => {
       copyTextBtn.innerHTML = "Copy Text"

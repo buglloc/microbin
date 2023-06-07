@@ -144,7 +144,23 @@ impl Pasta {
     }
 
     pub fn content_escaped(&self) -> String {
-        html_escape::encode_text(&self.content.replace('`', "\\`").replace('$', "\\$")).to_string()
+        let mut rv = String::with_capacity(self.content.len());
+        for c in self.content.chars() {
+            match c {
+                '<' => rv.push_str("\\u003c"),
+                '>' => rv.push_str("\\u003e"),
+                '\\' => rv.push_str("\\u005c"),
+                '/' => rv.push_str("\\u002f"),
+                '`' => rv.push_str("\\u0060"),
+                '\r' => rv.push_str("\\r"),
+                '\n' => rv.push_str("\\n"),
+                '\u{2028}' => rv.push_str("\\u2028"),
+                '\u{2029}' => rv.push_str("\\u2029"),
+                _ => rv.push(c),
+            }
+        }
+
+        rv
     }
 }
 
